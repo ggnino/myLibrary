@@ -11,6 +11,9 @@
   scroll-behavior: smooth;
   overflow: hidden;
 }
+input {
+  transition: all 0.2s linear;
+}
 
 .library-container {
   display: grid;
@@ -57,9 +60,6 @@
   background-color: antiquewhite;
   border-radius: 1rem;
   border: 0.5rem solid black;
-  transition: all 0.2s linear;
-}
-input {
   transition: all 0.2s linear;
 }
 
@@ -142,13 +142,11 @@ input {
 }
 #modal-close-btn:disabled {
   border: none;
-  /* box-shadow: none; */
 }
 #modal-close-btn:disabled:hover {
   background-color: antiquewhite;
   color: rgba(16, 16, 16, 0.3);
   border: none;
-  /* box-shadow: none; */
 }
 #modal-close-btn:hover {
   color: antiquewhite;
@@ -158,6 +156,7 @@ input {
 .library-modal::backdrop {
   background-color: rgba(0, 0, 0, 0.795);
 }
+
 /* Bookshelf */
 
 .library-bookshelf {
@@ -168,7 +167,7 @@ input {
   justify-items: center;
   grid-auto-flow: row;
 }
-
+/* Book */
 .library-book {
   display: grid;
   height: 50rem;
@@ -180,6 +179,7 @@ input {
   box-shadow: 0rem 1rem 2rem black;
   align-items: center;
   text-align: center;
+  margin: 1rem;
 }
 
 .library-book-title,

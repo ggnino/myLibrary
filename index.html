@@ -14,16 +14,21 @@
       </header>
       <section class="library-bookshelf">
         <dialog class="library-modal">
-          <form class="library-modal-form">
+          <form class="library-modal-form" method="dialog">
             <label for="book_title" id="bk_title">BOOK TITLE:</label>
             <input type="text" name="book_title" id="book_title" required />
             <label id="bk_author" for="book_author">BOOK AUTHOR:</label>
             <input type="text" name="book_author" id="book_author" required />
             <label id="bk_pages" for="book_pages">BOOK PAGES:</label>
-            <input type="number" name="book_pages" id="book_pages" required />
+            <input type="number" name="book_pages" id="book_pages" />
             <label id="bk_read" for="book_read">BOOK READ:</label>
-            <input type="text" name="book_read" id="book_read" />
-            <button id="modal-close-btn" autofocus>Close</button>
+            <div id="book_read">
+              <input id="readT" type="radio" value="true" name="book_read" />
+              <span>True</span>
+              <input id="readF" type="radio" value="false" name="book_read" />
+              <span>False</span>
+            </div>
+            <button type="submit" id="modal-close-btn">Close</button>
           </form>
         </dialog>
       </section>
