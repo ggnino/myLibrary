@@ -1,4 +1,4 @@
-const myLibrary = [];
+// const myLibrary = [];
 
 function Books(title, author, pages, read) {
   this.title = title;
@@ -10,12 +10,34 @@ function Books(title, author, pages, read) {
   };
 }
 
-const book1 = new Books(
-  "The Communist Manifiesto",
-  "Karl Marx",
-  64,
-  "Read Completely"
-);
+function createMyBooks() {
+  const book1 = createBookElements(
+    new Books("Eloquent JavaScript", "Marijn Haverbeke", 474, "Read")
+  );
+  const book2 = createBookElements(
+    new Books("You Don't Know JS Yet", "Kyle Simpson", 143, "Read")
+  );
+  const book3 = createBookElements(
+    new Books("A Clash of Kings", "George R. R. Martin", 761, "Read")
+  );
+  const book4 = createBookElements(
+    new Books("Alice in Wonderland", "Lewis Carroll", 101, "Read")
+  );
+  const book5 = createBookElements(
+    new Books(
+      "Harry Potter and the Sorcerer's Stone",
+      "J.K. Rowling",
+      145,
+      "Read"
+    )
+  );
+  const book6 = createBookElements(
+    new Books("Pete the Cat: Trick or Pete", "James Dean", 16, "Read")
+  );
+  let myBooks = [book1, book2, book3, book4, book5, book6];
+
+  return myBooks;
+}
 
 function createBookElements(book) {
   const myBook = document.createElement("div");
@@ -45,15 +67,25 @@ function createBookElements(book) {
   return myBook;
 }
 
-function addBookToLibrary() {
+function addBookToLibrary(book = null) {
   const myBookShelf = document.getElementsByClassName("library-bookshelf")[0];
-  console.log(myLibrary);
 
-  for (let x = 1; x <= 6; x++) {
-    myLibrary.push(createBookElements(book1));
-  }
-
-  myBookShelf.append(...myLibrary);
+  const myLibrary = createMyBooks();
+  if (!book) myBookShelf.append(...myLibrary);
+  else myBookShelf.append(book);
 }
+
+function clickHandler(e) {
+  const dialog = document.getElementsByTagName("dialog")[0];
+
+  if (e.target.className.includes("add")) dialog.showModal();
+  else dialog.close();
+}
+document
+  .getElementsByClassName("library-add-btn")[0]
+  .addEventListener("click", (e) => clickHandler(e));
+document
+  .getElementById("modal-close-btn")
+  .addEventListener("click", (e) => clickHandler(e));
 
 addBookToLibrary();
