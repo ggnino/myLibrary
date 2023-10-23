@@ -1,3 +1,6 @@
+const userBook = new Books();
+
+// Constructor function for creating book objects
 function Books(title, author, pages, read) {
   this.title = title;
   this.author = author;
@@ -7,7 +10,7 @@ function Books(title, author, pages, read) {
     return `${this.title} by ${this.author}, ${this.pages}, ${this.read}`;
   };
 }
-let userBook = new Books();
+// function for creating initial books
 function createMyBooks() {
   const book1 = createBookElements(
     new Books("Eloquent JavaScript", "Marijn Haverbeke", 474, "Read")
@@ -37,6 +40,7 @@ function createMyBooks() {
   return myBooks;
 }
 
+// function for turning book objects into DOM elements
 function createBookElements(book) {
   const myBook = document.createElement("div");
   const myBookTitle = document.createElement("h2");
@@ -64,7 +68,7 @@ function createBookElements(book) {
 
   return myBook;
 }
-
+// function for adding initial books to the library
 function addBookToLibrary(book = null) {
   const myBookShelf = document.getElementsByClassName("library-bookshelf")[0];
 
@@ -77,8 +81,7 @@ function clickHandler(e) {
   const dialog = document.getElementsByTagName("dialog")[0];
   const form = document.getElementsByClassName("library-modal-form")[0];
   const closeBtn = document.getElementById("modal-close-btn");
-
-  console.log(e.target.id);
+  const titleInput = document.getElementById("book_title");
 
   if (e.target.className.includes("add")) dialog.showModal();
   else {
@@ -94,11 +97,13 @@ function clickHandler(e) {
       }
     }
     if (!inLibrary) {
+      titleInput.style.borderColor = "black";
       myBookShelf.appendChild(createBookElements(userBook));
       closeBtn.disabled = true;
       form.reset();
       dialog.close();
     } else {
+      titleInput.style.borderColor = "red";
       closeBtn.disabled = true;
       form.reset();
     }
@@ -108,7 +113,7 @@ function clickHandler(e) {
     }
   }
 }
-
+// function for adding event listeners to DOM elements
 function eventAdder() {
   const addBtn = document.getElementsByClassName("library-add-btn")[0];
   const closeBtn = document.getElementById("modal-close-btn");
@@ -135,12 +140,9 @@ function inputHandler(e) {
   if (e.target.id === "book_pages") userBook.pages = e.target.value;
   if (e.target.id.includes("read")) userBook.read = e.target.value;
   if (userBook.author && userBook.title && userBook.pages) {
-    console.log("aqui");
     const closeBtn = document.getElementById("modal-close-btn");
     closeBtn.disabled = false;
   }
-  console.log(userBook.author, userBook.title, userBook.pages);
-  console.log(userBook.author && userBook.title && userBook.pages);
 }
 
 addBookToLibrary();
