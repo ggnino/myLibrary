@@ -1,31 +1,25 @@
-const userBook = new Books();
+const userBook = theBook();
 
-// Constructor function for creating book objects
-function Books(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-  this.info = function () {
-    return `${this.title} by ${this.author}, ${this.pages}, ${this.read}`;
-  };
+// factory function for creating book objects
+function theBook(title, author, pages, read) {
+  return { title, author, pages, read };
 }
 // function for creating initial books
 function createMyBooks() {
   const book1 = createBookElements(
-    new Books("Eloquent JavaScript", "Marijn Haverbeke", 474, "Read")
+    theBook("Eloquent JavaScript", "Marijn Haverbeke", 474, "Read")
   );
   const book2 = createBookElements(
-    new Books("You Don't Know JS Yet", "Kyle Simpson", 143, "Read")
+    theBook("You Don't Know JS Yet", "Kyle Simpson", 143, "Read")
   );
   const book3 = createBookElements(
-    new Books("A Clash of Kings", "George R. R. Martin", 761, "Read")
+    theBook("A Clash of Kings", "George R. R. Martin", 761, "Read")
   );
   const book4 = createBookElements(
-    new Books("Alice in Wonderland", "Lewis Carroll", 101, "Read")
+    theBook("Alice in Wonderland", "Lewis Carroll", 101, "Read")
   );
   const book5 = createBookElements(
-    new Books(
+    theBook(
       "Harry Potter and the Sorcerer's Stone",
       "J.K. Rowling",
       145,
@@ -33,7 +27,7 @@ function createMyBooks() {
     )
   );
   const book6 = createBookElements(
-    new Books("Pete the Cat: Trick or Pete", "James Dean", 16, "Read")
+    theBook("Pete the Cat: Trick or Pete", "James Dean", 16, "Read")
   );
   let myBooks = [book1, book2, book3, book4, book5, book6];
 
