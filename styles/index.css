@@ -1,0 +1,210 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:ital,wght@0,400;0,700;0,900;1,500;1,700;1,900&display=swap");
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Oswald", sans-serif;
+}
+
+:root {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  overflow: hidden;
+}
+
+.library-container {
+  display: grid;
+  grid-template-rows: 1fr 10fr;
+  min-height: 100vh;
+  background-color: blanchedalmond;
+}
+/* Header */
+.library-header {
+  background-color: darkred;
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  align-items: center;
+  justify-items: center;
+  color: antiquewhite;
+  box-shadow: 0rem 1rem 1rem black;
+}
+.library-logo {
+  justify-self: start;
+  padding: 2rem;
+  font-size: 4rem;
+}
+.library-add-btn {
+  justify-self: end;
+  color: antiquewhite;
+  grid-column: 2/2;
+  justify-self: center;
+  padding: 1rem 5rem;
+}
+.library-add-btn:hover {
+  border-color: darkred;
+  transform: translateY(0rem);
+  box-shadow: none;
+  color: black;
+  background-color: rgb(0, 209, 0);
+}
+
+.library-modal {
+  margin: auto;
+  width: 25vw;
+  height: 50%;
+  align-items: center;
+  justify-items: center;
+  background-color: antiquewhite;
+  border-radius: 1rem;
+  border: 0.5rem solid black;
+  transition: all 0.2s linear;
+}
+input {
+  transition: all 0.2s linear;
+}
+
+.library-modal-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, 1fr) 2fr;
+  height: 100%;
+  gap: 1rem;
+  padding: 1rem;
+  align-items: center;
+}
+.library-modal-form label,
+.library-modal-form input,
+.library-modal-form button {
+  font-size: 3rem;
+}
+.library-modal-form input,
+.library-modal-form label {
+  border-radius: 0.5rem;
+  border: 0.5rem solid black;
+}
+.library-modal-form input:focus {
+  border-color: royalblue;
+}
+.library-modal-form label {
+  text-align: center;
+  background-color: darkred;
+}
+
+#bk_title {
+  grid-row: 1/1;
+  align-self: end;
+}
+
+#book_title {
+  align-self: start;
+  grid-row: 2/2;
+}
+#bk_author {
+  grid-column: 2/2;
+  align-self: end;
+}
+#book_author {
+  align-self: start;
+  grid-row: 2/2;
+}
+#bk_pages {
+  grid-row: 3/3;
+  align-self: end;
+}
+#book_pages {
+  grid-row: 4/4;
+  align-self: start;
+}
+#bk_read {
+  grid-column: 2/2;
+  align-self: end;
+}
+#book_read {
+  align-self: start;
+}
+#modal-close-btn {
+  grid-column: 1/3;
+  justify-self: center;
+  padding: 2rem 5rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  border: 0.5rem solid black;
+  background-color: transparent;
+  box-shadow: 0rem 1rem 1rem black;
+  transition: all 0.2s linear;
+}
+#modal-close-btn:hover {
+  color: antiquewhite;
+  background-color: darkred;
+}
+
+.library-modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.795);
+}
+/* Bookshelf */
+
+.library-bookshelf {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  align-items: center;
+  justify-items: center;
+  grid-auto-flow: row;
+}
+
+.library-book {
+  display: grid;
+  height: 50rem;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr repeat(4, 1fr);
+  width: clamp(28rem, 12vw, 20vw);
+  border: 0.5rem solid black;
+  border-radius: 0.5rem;
+  box-shadow: 0rem 1rem 2rem black;
+  align-items: center;
+  text-align: center;
+}
+
+.library-book-title,
+.library-book-author,
+.library-book-pages,
+.library-book-read {
+  font-size: 2rem;
+  padding: 1rem;
+  border-bottom: 0.5rem solid black;
+}
+
+.library-book-title {
+  background-color: darkred;
+  font-size: 4rem;
+  grid-column: 1/1;
+  height: 100%;
+  width: 100%;
+  align-self: center;
+  text-align: center;
+}
+
+.library-book-btn,
+.library-add-btn {
+  font-size: 2rem;
+  margin: 1rem;
+  background-color: transparent;
+  border-radius: 1rem;
+  border: 0.5rem solid black;
+  transition: all 0.2s linear;
+  cursor: pointer;
+  box-shadow: 0rem 0.5rem 1rem black;
+  transform: translateY(-0.5rem);
+}
+
+.library-book-btn {
+  padding: 1rem;
+}
+
+.library-book-btn:hover {
+  border-color: darkred;
+  background-color: darkred;
+  color: antiquewhite;
+  transform: translateY(0rem);
+  box-shadow: none;
+}
