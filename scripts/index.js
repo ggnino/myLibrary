@@ -49,6 +49,10 @@ function createBookElements(book) {
   const myBookRead = document.createElement("p");
   const myBookBtn = document.createElement("button");
   const bookClassName = "library-book";
+  const booksInLibrary =
+    document.getElementsByClassName("library-bookshelf")[0].children.length;
+
+  myBookBtn.addEventListener("click", (e) => clickHandler(e));
 
   myBook.setAttribute("class", bookClassName);
   myBookTitle.setAttribute("class", `${bookClassName}-title`);
@@ -56,6 +60,7 @@ function createBookElements(book) {
   myBookPages.setAttribute("class", `${bookClassName}-pages`);
   myBookRead.setAttribute("class", `${bookClassName}-read`);
   myBookBtn.setAttribute("class", `${bookClassName}-btn`);
+  myBookBtn.setAttribute("id", `delete-btn-${booksInLibrary}`);
   myBookBtn.textContent = "Delete";
 
   for (let prop in book) {
@@ -69,23 +74,39 @@ function createBookElements(book) {
   return myBook;
 }
 // function for adding initial books to the library
-function addBookToLibrary(book = null) {
+function addBookToLibrary() {
   const myBookShelf = document.getElementsByClassName("library-bookshelf")[0];
 
   const myLibrary = createMyBooks();
-  eventAdder();
-  if (!book) myBookShelf.append(...myLibrary);
-}
 
+  myBookShelf.append(...myLibrary);
+  eventAdder();
+}
+// functon for handling click events
 function clickHandler(e) {
+  const myBookShelf = document.getElementsByClassName("library-bookshelf")[0];
   const dialog = document.getElementsByTagName("dialog")[0];
   const form = document.getElementsByClassName("library-modal-form")[0];
   const closeBtn = document.getElementById("modal-close-btn");
   const titleInput = document.getElementById("book_title");
-
+  // click event for add btn
   if (e.target.className.includes("add")) dialog.showModal();
+  // click event for delete btn
+  else if (e.target.id.includes("delete")) {
+    const updatedLibrary = [];
+
+    const bookToDel = e.target.parentNode.children[0].textContent;
+
+    for (let count = 0; count < myBookShelf.children.length; count++) {
+      if (myBookShelf.children[count].children[0].textContent !== bookToDel) {
+        updatedLibrary.push(myBookShelf.children[count]);
+      }
+    }
+
+    myBookShelf.replaceChildren(...updatedLibrary);
+  }
+  // click event for close btn on modal
   else {
-    const myBookShelf = document.getElementsByClassName("library-bookshelf")[0];
     const myLibrary = document.getElementsByClassName("library-book");
     let inLibrary = false;
     for (let book of myLibrary) {
@@ -107,10 +128,6 @@ function clickHandler(e) {
       closeBtn.disabled = true;
       form.reset();
     }
-
-    for (let prop in userBook) {
-      if (userBook[prop]) userBook[prop] = "";
-    }
   }
 }
 // function for adding event listeners to DOM elements
@@ -122,9 +139,13 @@ function eventAdder() {
   const pagesInput = document.getElementById("book_pages");
   const readInput = document.getElementById("book_read");
   const deleteBtns = document.getElementsByClassName("library-book-btn");
+  let counter = 1;
   for (let btn of deleteBtns) {
+    btn.setAttribute("id", `delete-btn-${counter}`);
     btn.addEventListener("click", (e) => clickHandler(e));
+    counter++;
   }
+
   closeBtn.disabled = true;
   addBtn.addEventListener("click", (e) => clickHandler(e));
   closeBtn.addEventListener("click", (e) => clickHandler(e));
@@ -133,7 +154,7 @@ function eventAdder() {
   pagesInput.addEventListener("input", (e) => inputHandler(e));
   readInput.addEventListener("input", (e) => inputHandler(e));
 }
-
+// function for handling the input
 function inputHandler(e) {
   if (e.target.id === "book_title") userBook.title = e.target.value;
   if (e.target.id === "book_author") userBook.author = e.target.value;
