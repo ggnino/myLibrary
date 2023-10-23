@@ -35,6 +35,7 @@ input {
   justify-self: start;
   padding: 2rem;
   font-size: 4rem;
+  cursor: default;
 }
 .library-add-btn {
   justify-self: end;
