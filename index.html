@@ -2,11 +2,33 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width:device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles/index.css" />
     <title>The Library</title>
   </head>
   <body>
-    <script src="./scirpts/index.js"></script>
+    <main class="library-container">
+      <header class="library-header">
+        <h1 class="library-logo">La Biblioteca</h1>
+        <button class="library-add-btn" type="button">ADD</button>
+      </header>
+      <section class="library-bookshelf">
+        <dialog class="library-modal">
+          <form class="library-modal-form">
+            <label for="book_title" id="bk_title">BOOK TITLE:</label>
+            <input type="text" name="book_title" id="book_title" required />
+            <label id="bk_author" for="book_author">BOOK AUTHOR:</label>
+            <input type="text" name="book_author" id="book_author" required />
+            <label id="bk_pages" for="book_pages">BOOK PAGES:</label>
+            <input type="number" name="book_pages" id="book_pages" required />
+            <label id="bk_read" for="book_read">BOOK READ:</label>
+            <input type="text" name="book_read" id="book_read" />
+            <button id="modal-close-btn" autofocus>Close</button>
+          </form>
+        </dialog>
+      </section>
+    </main>
+    <script src="./scripts/index.js"></script>
   </body>
 </html>
+!
