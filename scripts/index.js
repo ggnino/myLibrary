@@ -1,6 +1,9 @@
-const runLibraryApp = () => {
+const runLibraryApp = (() => {
   const userBook = theBook();
+  const libraryContainer =
+    document.getElementsByClassName("library-container")[0];
 
+  const myBookShelf = libraryContainer.children[1];
   // factory function for creating book objects
   function theBook(title, author, pages, read) {
     return { title, author, pages, read };
@@ -8,27 +11,27 @@ const runLibraryApp = () => {
   // function for creating initial books
   function createMyBooks() {
     const book1 = createBookElements(
-      theBook("Eloquent JavaScript", "Marijn Haverbeke", 474, "Read")
+      theBook("Eloquent JavaScript", "Marijn Haverbeke", 474, "True")
     );
     const book2 = createBookElements(
-      theBook("You Don't Know JS Yet", "Kyle Simpson", 143, "Read")
+      theBook("You Don't Know JS Yet", "Kyle Simpson", 143, "True")
     );
     const book3 = createBookElements(
-      theBook("A Clash of Kings", "George R. R. Martin", 761, "Read")
+      theBook("A Clash of Kings", "George R. R. Martin", 761, "True")
     );
     const book4 = createBookElements(
-      theBook("Alice in Wonderland", "Lewis Carroll", 101, "Read")
+      theBook("Alice in Wonderland", "Lewis Carroll", 101, "True")
     );
     const book5 = createBookElements(
       theBook(
         "Harry Potter and the Sorcerer's Stone",
         "J.K. Rowling",
         145,
-        "Read"
+        "True"
       )
     );
     const book6 = createBookElements(
-      theBook("Pete the Cat: Trick or Pete", "James Dean", 16, "Read")
+      theBook("Pete the Cat: Trick or Pete", "James Dean", 16, "True")
     );
     let myBooks = [book1, book2, book3, book4, book5, book6];
 
@@ -44,8 +47,7 @@ const runLibraryApp = () => {
     const myBookRead = document.createElement("p");
     const myBookBtn = document.createElement("button");
     const bookClassName = "library-book";
-    const booksInLibrary =
-      document.getElementsByClassName("library-bookshelf")[0].children.length;
+    const booksInLibrary = myBookShelf.children.length;
 
     myBookBtn.addEventListener("click", (e) => clickHandler(e));
 
@@ -76,31 +78,30 @@ const runLibraryApp = () => {
   }
   // function for adding initial books to the library
   function addBookToLibrary() {
-    const myBookShelf = document.getElementsByClassName("library-bookshelf")[0];
-
     const myLibrary = createMyBooks();
 
     myBookShelf.append(...myLibrary);
     eventAdder();
   }
+
   // functon for handling click events
   function clickHandler(e) {
-    const myBookShelf = document.getElementsByClassName("library-bookshelf")[0];
-    const dialog = document.getElementsByTagName("dialog")[0];
-    const form = document.getElementsByClassName("library-modal-form")[0];
-    const closeBtn = document.getElementById("modal-close-btn");
-    const titleInput = document.getElementById("book_title");
+    const dialog = myBookShelf.children[0];
+    const form = dialog.children[0];
+    const closeBtn = form.children["modal-close-btn"];
+    const titleInput = form.children["book_title"];
+    const myLibrary = [...myBookShelf.children];
+
     // click event for add btn
     if (e.target.className.includes("add")) dialog.showModal();
     // click event for delete btn
     else if (e.target.id.includes("delete")) {
       const updatedLibrary = [];
-
       const bookToDel = e.target.parentNode.children[0].textContent;
 
-      for (let count = 0; count < myBookShelf.children.length; count++) {
-        if (myBookShelf.children[count].children[0].textContent !== bookToDel) {
-          updatedLibrary.push(myBookShelf.children[count]);
+      for (let count = 0; count < myLibrary.length; count++) {
+        if (myLibrary[count].children[0].textContent !== bookToDel) {
+          updatedLibrary.push(myLibrary[count]);
         }
       }
 
@@ -108,7 +109,6 @@ const runLibraryApp = () => {
     }
     // click event for close btn on modal
     else {
-      const myLibrary = document.getElementsByClassName("library-book");
       let inLibrary = false;
       for (let book of myLibrary) {
         if (
@@ -122,29 +122,74 @@ const runLibraryApp = () => {
         titleInput.style.borderColor = "black";
         myBookShelf.appendChild(createBookElements(userBook));
         closeBtn.disabled = true;
-        form.reset();
         dialog.close();
       } else {
         titleInput.style.borderColor = "red";
         closeBtn.disabled = true;
-        form.reset();
+      }
+      form.reset();
+      resetModalInputs();
+    }
+  }
+
+  function resetModalInputs() {
+    for (let prop in userBook) {
+      if (userBook[prop]) userBook[prop] = "";
+    }
+  }
+  function getUserElements(elements) {
+    let titleInput = null,
+      authorInput = null,
+      pagesInput = null,
+      readInput = null,
+      addBtn = libraryContainer.children[0].children[1],
+      deleteBtns = [],
+      closeBtn = null;
+    for (let prop in myBookShelf.children) {
+      if (myBookShelf.children[prop].children) {
+        const bookEl = myBookShelf.children[prop].children;
+
+        for (let p in bookEl) {
+          if (bookEl[p].id === "delete-btn-1") {
+            deleteBtns.push(bookEl[p]);
+          }
+        }
       }
     }
+
+    for (let element of elements) {
+      if (element.id === "book_title") titleInput = element;
+      if (element.id === "book_author") authorInput = element;
+      if (element.id === "book_pages") pagesInput = element;
+      if (element.id === "book_read") readInput = element;
+      if (element.id === "modal-close-btn") closeBtn = element;
+    }
+    return {
+      titleInput,
+      authorInput,
+      pagesInput,
+      readInput,
+      closeBtn,
+      addBtn,
+      deleteBtns,
+    };
   }
   // function for adding event listeners to DOM elements
   function eventAdder() {
-    const addBtn = document.getElementsByClassName("library-add-btn")[0];
-    const closeBtn = document.getElementById("modal-close-btn");
-    const titleInput = document.getElementById("book_title");
-    const authorInput = document.getElementById("book_author");
-    const pagesInput = document.getElementById("book_pages");
-    const readInput = document.getElementById("book_read");
-    const deleteBtns = document.getElementsByClassName("library-book-btn");
-    let counter = 1;
-    for (let btn of deleteBtns) {
-      btn.setAttribute("id", `delete-btn-${counter}`);
-      btn.addEventListener("click", (e) => clickHandler(e));
-      counter++;
+    const elements = myBookShelf.children[0].children[0].children;
+    const {
+      titleInput,
+      authorInput,
+      pagesInput,
+      readInput,
+      addBtn,
+      closeBtn,
+      deleteBtns,
+    } = getUserElements(elements);
+
+    for (let counter = 1; counter < deleteBtns.length; counter++) {
+      deleteBtns[counter].setAttribute("id", `delete-btn-${counter}`);
+      deleteBtns[counter].addEventListener("click", (e) => clickHandler(e));
     }
 
     closeBtn.disabled = true;
@@ -161,13 +206,12 @@ const runLibraryApp = () => {
     if (e.target.id === "book_author") userBook.author = e.target.value;
     if (e.target.id === "book_pages") userBook.pages = e.target.value;
     if (e.target.id.includes("read")) userBook.read = e.target.value;
-    if (userBook.author && userBook.title && userBook.pages) {
-      const closeBtn = document.getElementById("modal-close-btn");
+    if (userBook.author && userBook.title && userBook.pages && userBook.read) {
+      const closeBtn =
+        myBookShelf.children[0].children[0].children["modal-close-btn"];
       closeBtn.disabled = false;
     }
   }
 
   addBookToLibrary();
-};
-
-runLibraryApp();
+})();
